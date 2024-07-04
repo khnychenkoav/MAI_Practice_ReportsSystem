@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Shop.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SalesReportController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

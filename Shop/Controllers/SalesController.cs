@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shop.Data;
 using Shop.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SalesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -42,6 +40,12 @@ namespace Shop.Controllers
         [HttpPost]
         public async Task<ActionResult<Sale>> PostSale(Sale sale)
         {
+            var userExists = await _context.Users.AnyAsync(u => u.UserName == sale.Username);
+            if (!userExists)
+            {
+                return BadRequest("Invalid username.");
+            }
+
             sale.Date = DateTime.SpecifyKind(sale.Date, DateTimeKind.Utc);
             _context.Sales.Add(sale);
             await _context.SaveChangesAsync();

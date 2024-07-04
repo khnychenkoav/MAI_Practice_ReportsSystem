@@ -2,8 +2,11 @@
 
 namespace Shop.Models
 {
+    /// <summary>
+    /// Represents an application user.
+    /// </summary>
     public class User : IdentityUser
     {
-        // Дополнительные поля для пользователя
+        // Add additional fields for the user here.
     }
 }
