@@ -9,6 +9,7 @@ using iText.Layout.Borders;
 using SkiaSharp;
 using Shop.Models;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Shop.Controllers
 {
@@ -19,12 +20,27 @@ namespace Shop.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the SalesPdfReportController class.
+        /// </summary>
+        /// <param name="context">The database context to be used.</param>
         public SalesPdfReportController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet("pdf-report")]
+        /// <summary>
+        /// Generates a PDF report of sales data.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint retrieves sales data from the database and generates a PDF report.
+        /// </remarks>
+        /// <returns>A PDF file containing the sales report.</returns>
+        /// <response code="200">Returns the generated PDF file.</response>
+        /// <response code="401">Unauthorized access.</response>
+        [HttpGet("generate-report")]
+        [SwaggerOperation(Summary = "Generate sales PDF report", Description = "Retrieve sales data and generate a PDF report.")]
+        [SwaggerResponse(200, "Returns the generated PDF file", typeof(FileResult))]
         public async Task<IActionResult> GetPdfReport()
         {
             var sales = await _context.Sales.ToListAsync();

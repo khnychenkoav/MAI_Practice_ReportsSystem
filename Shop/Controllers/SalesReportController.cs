@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Shop.Data;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Shop.Controllers
 {
@@ -19,6 +20,9 @@ namespace Shop.Controllers
         }
 
         [HttpGet("text-report")]
+        [SwaggerOperation(Summary = "Get sales text report", Description = "Generate a detailed text report of all sales, including product statistics and daily revenue.")]
+        [SwaggerResponse(200, "Returns the sales report as a text file", typeof(FileContentResult))]
+        [SwaggerResponse(401, "Unauthorized")]
         public async Task<IActionResult> GetTextReport()
         {
             var sales = await _context.Sales.ToListAsync();

@@ -69,6 +69,6 @@ dotnet run
 ## Дополнительная информация
 Для получения дополнительной информации или помощи обратитесь к разработчику:
 
-**Email:** your-email@example.com
+**Email:** khnartem@gmail.com
 
-**GitHub:** github.com/yourusername
+**GitHub:** github.com/khnychenkoav

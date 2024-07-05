@@ -8,6 +8,7 @@ using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Shop
 {
@@ -86,7 +87,17 @@ namespace Shop
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sales API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Sales API",
+                    Version = "v1",
+                    Description = "API for generating sales reports and statistics for MAI practice (8 Institute, first course)",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Artem Khnychenko",
+                        Email = "khnartem@gmail.com"
+                    }
+                });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -95,7 +106,7 @@ namespace Shop
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Enter 'Bearer' [space] and your token"
+                    Description = "Enter your token"
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -112,6 +123,7 @@ namespace Shop
                         new string[] {}
                     }
                 });
+                c.EnableAnnotations();
             });
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
