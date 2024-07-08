@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Shop</name>
+    </assembly>
+    <members>
+        <member name="M:Shop.Controllers.SalesPdfReportController.#ctor(Shop.Data.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the SalesPdfReportController class.
+            </summary>
+            <param name="context">The database context to be used.</param>
+        </member>
+        <member name="M:Shop.Controllers.SalesPdfReportController.GetPdfReport">
+            <summary>
+            Generates a PDF report of sales data.
+            </summary>
+            <remarks>
+            This endpoint retrieves sales data from the database and generates a PDF report.
+            </remarks>
+            <returns>A PDF file containing the sales report.</returns>
+            <response code="200">Returns the generated PDF file.</response>
+            <response code="401">Unauthorized access.</response>
+        </member>
+        <member name="M:Shop.Controllers.SalesExcelController.GetSalesExcel">
+            <summary>
+            Get sales data as an Excel file
+            </summary>
+            <remarks>
+            Retrieve sales data and statistics in an Excel file.
+            Example XML:
+            <Sale>
+            <Id>1</Id>
+            <ProductName>Product A</ProductName>
+            <Amount>10</Amount>
+            <Date>2023-07-01T00:00:00</Date>
+            <Price>100</Price>
+            <Username>User1</Username>
+            <Revenue>1000</Revenue>
+            </Sale>
+            </remarks>
+            <returns>A downloadable Excel file with sales data and statistics.</returns>
+            <response code="200">Returns the sales data Excel file</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:Shop.Controllers.SalesTableController.GetSalesTable">
+            <summary>
+            Get sales table data
+            </summary>
+            <remarks>
+            Retrieve sales data ordered by date to generate a sales table.
+            </remarks>
+            <returns>A list of sales data including product name, amount, and date.</returns>
+            <response code="200">Returns the sales table data</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="T:Shop.Data.ApplicationDbContext">
+            <summary>
+            Represents the database context for the application.
+            </summary>
+        </member>
+        <member name="M:Shop.Data.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Shop.Data.ApplicationDbContext})">
+            <summary>
+            Constructor for initializing the application database context.
+            </summary>
+            <param name="options">The DbContext options.</param>
+        </member>
+        <member name="P:Shop.Data.ApplicationDbContext.Sales">
+            <summary>
+            Gets or sets the DbSet for sales records.
+            </summary>
+        </member>
+        <member name="M:Shop.Data.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Configures the model schema and relationships between entities.
+            </summary>
+            <param name="builder">The model builder instance.</param>
+        </member>
+        <member name="T:Shop.Middleware.ErrorHandlingMiddleware">
+            <summary>
+            Middleware for error handling.
+            </summary>
+        </member>
+        <member name="M:Shop.Middleware.ErrorHandlingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Shop.Middleware.ErrorHandlingMiddleware})">
+            <summary>
+            Constructor to initialize <see cref="T:Shop.Middleware.ErrorHandlingMiddleware"/>.
+            </summary>
+            <param name="next">The next middleware in the pipeline.</param>
+            <param name="logger">Logger for logging errors.</param>
+        </member>
+        <member name="M:Shop.Middleware.ErrorHandlingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Handles the HTTP request.
+            </summary>
+            <param name="httpContext">The current HTTP context.</param>
+            <returns>Task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Shop.Middleware.ErrorHandlingMiddleware.HandleExceptionAsync(Microsoft.AspNetCore.Http.HttpContext,System.Exception)">
+            <summary>
+            Handles the exception and returns the appropriate response.
+            </summary>
+            <param name="context">HTTP context.</param>
+            <param name="exception">Exception to handle.</param>
+            <returns>Task representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Shop.Middleware.ErrorDetails">
+            <summary>
+            Class representing error details.
+            </summary>
+        </member>
+        <member name="P:Shop.Middleware.ErrorDetails.StatusCode">
+            <summary>
+            HTTP status code.
+            </summary>
+        </member>
+        <member name="P:Shop.Middleware.ErrorDetails.Message">
+            <summary>
+            Error message.
+            </summary>
+        </member>
+        <member name="P:Shop.Middleware.ErrorDetails.Detailed">
+            <summary>
+            Detailed error message.
+            </summary>
+        </member>
+        <member name="M:Shop.Middleware.ErrorDetails.ToString">
+            <summary>
+            Converts the object to a JSON string.
+            </summary>
+            <returns>JSON string representing the object.</returns>
+        </member>
+        <member name="T:Shop.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.Migrations.AddPriceToSale">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddPriceToSale.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddPriceToSale.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddPriceToSale.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.Migrations.AddUserLogic">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddUserLogic.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddUserLogic.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddUserLogic.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.Migrations.AddUsernameToSales">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddUsernameToSales.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddUsernameToSales.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.Migrations.AddUsernameToSales.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.ViewModels.LoginViewModel">
+            <summary>
+            ViewModel for user login.
+            </summary>
+        </member>
+        <member name="P:Shop.ViewModels.LoginViewModel.Username">
+            <summary>
+            Gets or sets the username.
+            </summary>
+        </member>
+        <member name="P:Shop.ViewModels.LoginViewModel.Password">
+            <summary>
+            Gets or sets the password.
+            </summary>
+        </member>
+        <member name="T:Shop.ViewModels.RegisterViewModel">
+            <summary>
+            ViewModel for user registration.
+            </summary>
+        </member>
+        <member name="P:Shop.ViewModels.RegisterViewModel.Username">
+            <summary>
+            Gets or sets the username.
+            </summary>
+        </member>
+        <member name="P:Shop.ViewModels.RegisterViewModel.Email">
+            <summary>
+            Gets or sets the email address.
+            </summary>
+        </member>
+        <member name="P:Shop.ViewModels.RegisterViewModel.Password">
+            <summary>
+            Gets or sets the password.
+            </summary>
+        </member>
+        <member name="T:Shop.Models.Sale">
+            <summary>
+            Represents a sale transaction.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.Id">
+            <summary>
+            Gets or sets the sale ID.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.ProductName">
+            <summary>
+            Gets or sets the product name.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.Amount">
+            <summary>
+            Gets or sets the amount sold.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.Date">
+            <summary>
+            Gets or sets the date of the sale.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.Price">
+            <summary>
+            Gets or sets the price per unit of the product.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.Username">
+            <summary>
+            Gets or sets the username of the person who made the sale.
+            </summary>
+        </member>
+        <member name="P:Shop.Models.Sale.Revenue">
+            <summary>
+            Gets the total revenue from the sale.
+            </summary>
+        </member>
+        <member name="T:Shop.Models.User">
+            <summary>
+            Represents an application user.
+            </summary>
+        </member>
+    </members>
+</doc>

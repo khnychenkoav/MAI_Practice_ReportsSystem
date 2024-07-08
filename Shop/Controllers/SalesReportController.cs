@@ -21,8 +21,10 @@ namespace Shop.Controllers
 
         [HttpGet("text-report")]
         [SwaggerOperation(Summary = "Get sales text report", Description = "Generate a detailed text report of all sales, including product statistics and daily revenue.")]
-        [SwaggerResponse(200, "Returns the sales report as a text file", typeof(FileContentResult))]
+        [SwaggerResponse(200, "Returns the sales report as a text file", typeof(FileResult))]
         [SwaggerResponse(401, "Unauthorized")]
+        [Produces("application/octet-stream")]
+
         public async Task<IActionResult> GetTextReport()
         {
             var sales = await _context.Sales.ToListAsync();

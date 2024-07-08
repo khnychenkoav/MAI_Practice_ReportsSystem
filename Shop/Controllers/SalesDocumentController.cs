@@ -41,6 +41,8 @@ namespace Shop.Controllers
         [HttpGet("generate-report")]
         [SwaggerOperation(Summary = "Generate sales PDF report", Description = "Retrieve sales data and generate a PDF report.")]
         [SwaggerResponse(200, "Returns the generated PDF file", typeof(FileResult))]
+        [Produces("application/octet-stream")]
+
         public async Task<IActionResult> GetPdfReport()
         {
             var sales = await _context.Sales.ToListAsync();

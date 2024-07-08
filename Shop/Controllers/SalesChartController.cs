@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Shop.Controllers
 {
@@ -20,13 +23,17 @@ namespace Shop.Controllers
 
         [HttpGet("sales-chart")]
         [SwaggerOperation(Summary = "Get sales chart data", Description = "Retrieve sales data grouped by date to generate a sales chart.")]
-        [SwaggerResponse(200, "Returns the sales chart data", typeof(IEnumerable<object>))]
+        [SwaggerResponse(200, "Returns the sales chart data", typeof(IEnumerable<SalesChartData>))]
         [SwaggerResponse(401, "Unauthorized")]
         public async Task<IActionResult> GetSalesChart()
         {
             var sales = await _context.Sales.ToListAsync();
             var salesData = sales.GroupBy(s => s.Date.Date)
-                                 .Select(g => new { Date = g.Key, TotalAmount = g.Sum(s => s.Amount) })
+                                 .Select(g => new SalesChartData
+                                 {
+                                     Date = g.Key,
+                                     TotalAmount = g.Sum(s => s.Amount)
+                                 })
                                  .OrderBy(g => g.Date)
                                  .ToList();
 

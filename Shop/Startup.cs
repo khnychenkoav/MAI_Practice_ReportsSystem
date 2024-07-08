@@ -124,6 +124,7 @@ namespace Shop
                     }
                 });
                 c.EnableAnnotations();
+                c.IncludeXmlComments("C:\\Users\\Tema\\Desktop\\projects .NET\\Shop\\Shop\\documentation.xml");
             });
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
@@ -160,9 +161,11 @@ namespace Shop
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseMiddleware<JwtCookieMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseSession();
 

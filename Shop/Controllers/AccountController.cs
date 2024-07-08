@@ -28,7 +28,7 @@ namespace Shop.Controllers
 
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register a new user", Description = "Creates a new user account with the specified username and email. Validates that the username and email are not already in use.")]
-        [SwaggerResponse(200, "User created successfully")]
+        [SwaggerResponse(200, "User created and logged in successfully")]
         [SwaggerResponse(400, "Username or email is already taken or validation error occurred")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -52,7 +52,7 @@ namespace Shop.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Ok(new { Result = "User created successfully" });
+                    return await Login(new LoginViewModel { Username = model.Username, Password = model.Password });
                 }
                 else
                 {
@@ -64,7 +64,7 @@ namespace Shop.Controllers
         }
 
         [HttpPost("login")]
-        [SwaggerOperation(Summary = "Login a user", Description = "Authenticates a user using the provided username and password. Returns a JWT token if successful.")]
+        [SwaggerOperation(Summary = "Login a user", Description = "Authenticates a user using the provided username and password.")]
         [SwaggerResponse(200, "User authenticated successfully", Type = typeof(string))]
         [SwaggerResponse(401, "Unauthorized - Invalid username or password")]
         [SwaggerResponse(400, "Validation error occurred")]
@@ -80,7 +80,13 @@ namespace Shop.Controllers
                     if (result.Succeeded)
                     {
                         var token = GenerateJwtToken(user);
-                        return Ok(new { Token = token });
+                        Response.Cookies.Append("jwt", token, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.Strict
+                        });
+                        return Ok();
                     }
                     else
                     {
@@ -103,6 +109,8 @@ namespace Shop.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            // Remove the JWT token from the cookie
+            Response.Cookies.Delete("jwt");
             return Ok(new { Result = "User logged out successfully" });
         }
 

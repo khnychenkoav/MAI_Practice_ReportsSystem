@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
@@ -29,13 +32,18 @@ namespace Shop.Controllers
         /// <response code="401">Unauthorized</response>
         [HttpGet("sales-table")]
         [SwaggerOperation(Summary = "Get sales table data", Description = "Retrieve sales data ordered by date to generate a sales table.")]
-        [SwaggerResponse(200, "Returns the sales table data", typeof(IEnumerable<object>))]
+        [SwaggerResponse(200, "Returns the sales table data", typeof(IEnumerable<SalesTableData>))]
         [SwaggerResponse(401, "Unauthorized")]
         public async Task<IActionResult> GetSalesTable()
         {
             var sales = await _context.Sales.ToListAsync();
             var salesData = sales.OrderBy(s => s.Date)
-                                 .Select(s => new { s.ProductName, s.Amount, s.Date })
+                                 .Select(s => new SalesTableData
+                                 {
+                                     ProductName = s.ProductName,
+                                     Amount = s.Amount,
+                                     Date = s.Date
+                                 })
                                  .ToList();
 
             return Ok(salesData);
